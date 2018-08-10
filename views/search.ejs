@@ -1,0 +1,64 @@
+<% include ./partials/header %>
+<div class="ui center fluid container"></div>
+    <h1>Search for a movie!</h1>
+    <form action="/results" method="GET">
+        <input type="text" placeholder="Search term" name="search">
+        <input type="submit">
+    
+    </form>
+
+    <h2>Saved movies</h2>
+
+
+
+
+    <div class="ui items">
+    <% movies.forEach(function(movie) { %>
+        <div class="item">
+            <div class="ui small image">
+                <img src="<%= movie.poster%>">
+            </div>
+            <div class="middle aligned content">
+                <div class="header">
+                    <a class="header" href=<%= "/movies/" + movie.imdbID %>> <%= movie.name%></a>
+                </div>
+                <div class="meta">
+                    <span><%= movie.releaseYear%></span><span><%= movie.director %></span><span>                    <p><%= movie.actors %></p></span>
+                </div>
+                <div class="description">
+                    <p><%= movie.plot %></p>
+                </div>
+                <div class="extra">
+                    <span><%= movie.runtime%></span>
+                    <span><%= movie.genre%></span>
+                    <span>IMDB: <%= movie.imdbRating%></span>
+                    <span>Rotten Tomatoes: <%= movie.rottenRating%></span>
+                </div>
+                <% if (movie.personalRating === null) { %> 
+                    <button class="huge ui button">
+                        <a href="/">Review Movie</a>
+                    </button>
+                <% } else { %>
+                    <div class="extra">
+                        <div class="ui rating large star" data-rating="3" data-max-rating="5"></div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    <% }); %>
+    </div>
+
+
+
+</div>
+
+<script>
+    $('.rating')
+  .rating({
+
+  });
+  console.log(window.location.href)
+
+</script>
+
+<% include ./partials/footer %>

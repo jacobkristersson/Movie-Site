@@ -1,0 +1,55 @@
+<% include ./partials/header %>
+
+
+<h3>Details for the movie: <%= data.Title %> </h3>
+
+ <img src=<%=data.Poster %> alt="Poster" >
+<table>
+  <tr>
+    <td> Release Year:</td>
+    <td><%= data.Year %></td>
+  </tr>
+  <tr>
+    <td>Runtime: </td>
+    <td><%= data.Runtime %> </td>
+  </tr>
+  <tr>
+      <td>Genre:</td>
+      <td><%= data.Genre %></td>
+      
+  </tr>
+  <tr>
+      <td>Director:</td>
+      <td> <%= data.Director %></td>
+  </tr>
+  <tr>
+      <td>Actors:</td>
+      <td><%=data.Actors%></td>
+  </tr>
+  <tr>
+      <td>Plot:</td>
+      <td><%=data.Plot%></td>
+  </tr>
+  <tr>
+      <td>IMD rating</td>
+      <td><%=data.Ratings[0].Value%></td>
+  </tr>
+  <tr>
+    <td>Rotten Tomatoes</td>
+    <td><%=data.Ratings[1].Value%></td>
+  </tr>
+ 
+  
+  </table>
+    
+
+  
+</table>
+
+
+<form action="/movies/<%=data.imdbID%>" method="POST">
+  <button>Add movie to watchlist</button>
+</form>
+
+<% include ./partials/footer %>
+  
