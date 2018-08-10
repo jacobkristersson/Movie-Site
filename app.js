@@ -2,10 +2,19 @@ var express = require("express");
 var app = express();
 
 var methodOverride = require("method-override");
-
+var bodyParser = require("body-parser")
 var request = require("request");
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"))
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/movie_app5");
 
@@ -51,10 +60,12 @@ app.get("/results", function(req, res) {
       if (!error && response.statusCode == 200) {
           var data = JSON.parse(body);
           console.log(data);
-          res.render("results", {data:data});
+          res.render("results", {data: data});
       } 
    });
 });
+
+
 
 app.get("/movies/:idOfMovie",function(req, res) {
     var id = req.params.idOfMovie;
@@ -70,6 +81,49 @@ app.get("/movies/:idOfMovie",function(req, res) {
     
 });
 
+
+    movie.findById(id, function(err, foundMovie) {
+        if (err) {
+            console.log(err)
+            res.redirect('/')
+        } else {
+            res.render('edit', {movie: foundMovie})
+        }
+
+
+
+    })
+})
+
+
+
+/// Update
+app.put("/movies/:idOfMovie", function(req, res) {
+    let dataFromForm = req.body.personalReview
+    let id = req.params.idOfMovie;
+    console.log(dataFromForm)
+
+    movie.findById(id, function (err, foundMovie) {
+        if (err) {
+            return handleError(err);  
+        } else {
+            foundMovie.personalReview = dataFromForm
+            foundMovie.save(function (err, updatedMovie) {
+              if (err) {
+                return handleError(err);
+              } else {
+                console.log(updatedMovie)
+            
+              }
+    
+            });
+            res.redirect('/')
+
+        }
+
+      });
+
+})
 
 app.post("/movies/:idOfMovie", function(req, res) {
     let id = req.params.idOfMovie;
@@ -111,6 +165,10 @@ app.post("/movies/:idOfMovie", function(req, res) {
 
 
 })
+
+
+
+
 
 
 app.listen(3000, function() {
