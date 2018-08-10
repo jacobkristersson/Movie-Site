@@ -1,0 +1,53 @@
+<% include ./partials/header %>
+<div class="ui center fluid container"></div>
+
+
+
+    <h2>Review <%=movie.name%></h2>
+
+
+
+
+    <div class="ui items">
+        <div class="item">
+            <div class="ui small image">
+                <img src="<%= movie.poster%>">
+            </div>
+            <div class="middle aligned content">
+                <div class="header">
+                    <a class="header" href=<%= "/movies/" + movie._id %>> <%= movie.name%></a>
+                </div>
+                <div class="meta">
+                    <span><%= movie.releaseYear%></span><span><%= movie.director %></span><span>                    <p><%= movie.actors %></p></span>
+                </div>
+                <div class="description">
+                    <p><%= movie.plot %></p>
+                </div>
+                <div class="extra">
+                    <span><%= movie.runtime%></span>
+                    <span><%= movie.genre%></span>
+                    <span>IMDB: <%= movie.imdbRating%></span>
+                    <span>Rotten Tomatoes: <%= movie.rottenRating%></span>
+                </div>
+                <% if (movie.personalReview === null) { %> 
+                  <form action="/movies/<%=movie._id%>?_method=PUT" method="POST">
+                    <textarea name="personalReview" rows="10" cols="80" placeholder="Write your movie review here"></textarea>
+                    <br>
+                    <input type="submit">
+                  
+                  </form>
+
+
+
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<% include ./partials/footer %>
