@@ -46,6 +46,12 @@ app.get("/", function(req, res) {
         } else {
             console.log("found movies!~!!!!")
             console.log(movies);
+            
+            // //  Filter to only an array of unseen movies
+            // let unseenMovies = movies.filter((movie) => {
+            //     return movie.personalReview
+            // })
+
             res.render("search", {movies: movies});
         }
     })
@@ -59,6 +65,7 @@ app.get("/results", function(req, res) {
      
       if (!error && response.statusCode == 200) {
           var data = JSON.parse(body);
+          console.log("DATTTATATAT")
           console.log(data);
           res.render("results", {data: data});
       } 
@@ -78,10 +85,14 @@ app.get("/movies/:idOfMovie",function(req, res) {
           res.render("details", {data: data});
       } 
    });
-    
+
+
 });
 
 
+/// EDIT Route
+app.get("/movies/:idOfMovie/edit", function(req, res) {
+    let id = req.params.idOfMovie;
     movie.findById(id, function(err, foundMovie) {
         if (err) {
             console.log(err)
@@ -162,9 +173,13 @@ app.post("/movies/:idOfMovie", function(req, res) {
         } 
      });
 
-
-
 })
+
+
+
+
+
+
 
 
 

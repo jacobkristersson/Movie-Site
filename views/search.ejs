@@ -10,11 +10,17 @@
     <h2>Saved movies</h2>
 
 
-
+    <button class="hideMovies">
+        Hide watched movies
+    </button>
 
     <div class="ui items">
     <% movies.forEach(function(movie) { %>
+        <% if (movie.personalReview=== null) { %> 
+        <div class="item notReviewed">
+        <% } else { %>
         <div class="item">
+        <% } %>
             <div class="ui small image">
                 <img src="<%= movie.poster%>">
             </div>
@@ -51,7 +57,18 @@
 
 
 </div>
+<script>
+    //  Why is this shit not working
+    const hideMoviesButton = document.querySelector(".hideMovies")
 
+    hideMoviesButton.addEventListener('click', function(event) {
+        document.querySelectorAll(".notReviewed").forEach(movie => {
+            movie.classList.remove("item")
+            movie.style.color= "none";
+            console.log(movie)
+        });
+    })
+</script>
 
 
 <% include ./partials/footer %>
