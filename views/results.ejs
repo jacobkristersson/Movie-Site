@@ -1,16 +1,22 @@
 <% include ./partials/header %>
 <h1>Results Page!</h1>
 
+<div class="ui items">
 <% data["Search"].forEach(function(movie) { %>
    
-   <p><a href=<%= "/movies/" + movie.imdbID %>   <li> <%= movie["Title"] %> - <%= movie.Year %> </li> </a></p>
-   
-   
+   <!-- <p><a href=<%= "/movies/" + movie.imdbID %>   <li> <%= movie["Title"] %> - <%= movie.Year %> </li> </a></p>
+    -->
+
+      <div class="item">
+          <div class="ui small image">
+              <img src="<%= movie.Poster%>">
+          </div>
+      </div>
    
    
    
 <% }); %>
-
+</div>
 
 
 <% include ./partials/footer %>
